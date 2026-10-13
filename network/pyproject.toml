@@ -3,6 +3,7 @@ name = "computedeck-network"
 version = "0.3.0a0"
 description = "Proxy diagnostics and egress tests for Mihomo or Clash setups"
 license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE", "THIRD_PARTY_NOTICES"]
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [

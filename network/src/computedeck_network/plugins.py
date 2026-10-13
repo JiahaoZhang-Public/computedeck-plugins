@@ -44,7 +44,7 @@ proxy = Plugin(
     description={
         "en": "Routes, system proxies and the Mihomo or Clash configuration of this machine "
         "and the server. Reads only; makes no requests.",
-        "zh-CN": "This device与服务器的路由、系统代理和 Mihomo/Clash 配置。只读取，不发起请求。",
+        "zh-CN": "本机与服务器的路由、系统代理和 Mihomo/Clash 配置。只读取，不发起请求。",
     },
     permissions=(
         {
@@ -65,7 +65,7 @@ egress = Plugin(
     description={
         "en": "On request, fetches one fixed site directly, through the local Mihomo port and "
         "through each IP SOCKS5 upstream, and reports the exit IP and timing.",
-        "zh-CN": "按需访问一个固定站点：直连、经Local Mihomo 端口、经每个 IP 形式的 SOCKS5 上游，"
+        "zh-CN": "按需访问一个固定站点：直连、经本机 Mihomo 端口、经每个 IP 形式的 SOCKS5 上游，"
         "给出出口 IP 和耗时。",
     },
     permissions=(

@@ -9,7 +9,7 @@ Plugins for [ComputeDeck](https://github.com/JiahaoZhang-Public/computedeck).
 
 ## Status
 
-The repositories are private and the first package release has not shipped. The official marketplace is empty for now.
+The source is available for development and review. No packages have been published yet, so the official marketplace is empty.
 
 Once packages are released, installation will use:
 

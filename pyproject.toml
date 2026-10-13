@@ -1,0 +1,38 @@
+[project]
+name = "computedeck-plugins-workspace"
+version = "0"
+requires-python = ">=3.12"
+dependencies = ["computedeck-network", "computedeck-shell-credentials"]
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "pytest-asyncio>=0.25,<2", "ruff>=0.11,<1", "mypy>=1.15,<2", "types-pyyaml>=6.0.12.20260906"]
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = ["network", "shell-credentials"]
+
+[tool.uv.sources]
+computedeck = { path = "../computedeck", editable = true }
+computedeck-network = { workspace = true }
+computedeck-shell-credentials = { workspace = true }
+
+[tool.pytest.ini_options]
+testpaths = ["network/tests", "shell-credentials/tests", "tests"]
+asyncio_mode = "auto"
+addopts = "--import-mode=importlib"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "ASYNC"]
+
+[tool.mypy]
+python_version = "3.12"
+check_untyped_defs = true
+disallow_untyped_defs = true
+explicit_package_bases = true
+mypy_path = ["network/src", "shell-credentials/src"]

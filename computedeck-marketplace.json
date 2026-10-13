@@ -1,0 +1,12 @@
+{
+  "name": "official",
+  "owner": {
+    "name": "ComputeDeck",
+    "url": "https://github.com/JiahaoZhang-Public/computedeck-plugins"
+  },
+  "description": {
+    "en": "Official ComputeDeck plugins",
+    "zh-CN": "ComputeDeck 官方插件"
+  },
+  "plugins": []
+}

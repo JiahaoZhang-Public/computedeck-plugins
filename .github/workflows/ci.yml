@@ -1,0 +1,56 @@
+name: CI
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  checks:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python: ['3.12', '3.13']
+        core: [minimum, latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: computedeck-plugins
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: computedeck-plugins
+      - uses: actions/checkout@v4
+        with:
+          repository: JiahaoZhang-Public/computedeck
+          ref: ${{ matrix.core == 'minimum' && vars.CORE_MIN_REF || 'main' }}
+          path: computedeck
+          ssh-key: ${{ secrets.COMPUTEDECK_READ_KEY }}
+          persist-credentials: false
+      - name: Require a pinned minimum baseline
+        if: matrix.core == 'minimum'
+        env:
+          CORE_MIN_REF: ${{ vars.CORE_MIN_REF }}
+        run: test -n "$CORE_MIN_REF"
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: computedeck-plugins/package-lock.json
+      - run: uv sync --frozen
+      - name: Install the selected core source baseline
+        run: uv pip install --no-deps -e ../computedeck
+      - run: npm ci
+      - run: bash scripts/check.sh
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - run: go install github.com/zricethezav/gitleaks/v8@v8.30.1
+      - run: gitleaks git --log-opts=--all --redact --no-banner

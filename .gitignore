@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+node_modules/
+**/src/*/web/
+dist/
+*.tsbuildinfo
+*.egg-info/
+.DS_Store

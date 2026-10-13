@@ -1,0 +1,109 @@
+name: Release computedeck-network
+on:
+  push:
+    tags: ['network-v*']
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  build:
+    # Enable only after the publication checklist and protected environments are ready.
+    if: github.repository == 'JiahaoZhang-Public/computedeck-plugins' && vars.PUBLISHING_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.release.outputs.version }}
+      stable: ${{ steps.release.outputs.stable }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/checkout@v4
+        with:
+          repository: JiahaoZhang-Public/computedeck
+          path: core-checkout
+          ref: main
+          ssh-key: ${{ secrets.COMPUTEDECK_READ_KEY }}
+          persist-credentials: false
+      - run: mv core-checkout ../computedeck
+      - name: Require a commit on main
+        run: git merge-base --is-ancestor HEAD origin/main
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - run: go install github.com/zricethezav/gitleaks/v8@v8.30.1
+      - run: gitleaks git --log-opts=--all --redact --no-banner
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate the tag
+        id: release
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: python3 scripts/release_check.py network "$RELEASE_TAG" network-v >> "$GITHUB_OUTPUT"
+      - run: uv sync --frozen
+      - run: npm ci
+      - run: bash scripts/check.sh
+      - run: rm -rf dist && uv build --package computedeck-network --no-sources
+      - uses: actions/upload-artifact@v4
+        with:
+          name: distributions
+          path: dist/*
+          if-no-files-found: error
+  testpypi:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: testpypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: distributions
+          path: dist
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+  pypi:
+    needs: [build, testpypi]
+    if: needs.build.outputs.stable == 'true'
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: distributions
+          path: dist
+      - uses: pypa/gh-action-pypi-publish@release/v1
+  catalog:
+    needs: [build, pypi]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Read the published wheel metadata
+        env:
+          VERSION: ${{ needs.build.outputs.version }}
+        run: python3 scripts/update_catalog.py network "$VERSION"
+      - name: Open the catalog update PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.build.outputs.version }}
+        run: |
+          git config user.name 'ComputeDeck'
+          git config user.email '107467223+JiahaoZhang-Public@users.noreply.github.com'
+          git switch -c "release/network-$VERSION"
+          git add computedeck-marketplace.json
+          git commit -m "chore: publish network $VERSION in the catalog"
+          git push origin "release/network-$VERSION"
+          gh pr create --base main --title "Publish network $VERSION in the catalog" --body-file docs/catalog-pr.md

@@ -1,0 +1,5 @@
+__pycache__/
+.venv/
+dist/
+web/node_modules/
+src/*/web/

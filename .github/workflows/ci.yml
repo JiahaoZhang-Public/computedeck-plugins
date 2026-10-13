@@ -15,10 +15,10 @@ jobs:
       run:
         working-directory: computedeck-plugins
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           path: computedeck-plugins
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           repository: JiahaoZhang-Public/computedeck
           ref: ${{ matrix.core == 'minimum' && vars.CORE_MIN_REF || 'main' }}
@@ -46,7 +46,7 @@ jobs:
   secrets:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - uses: actions/setup-go@v5

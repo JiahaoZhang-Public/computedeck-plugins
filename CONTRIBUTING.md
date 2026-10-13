@@ -6,7 +6,7 @@ Third-party plugins stay in their authors' repositories and can use their own ma
 
 ## Set up the checkouts
 
-You need Python 3.12 or 3.13, uv and Node.js 22. Until public release, you also need access to both private repositories. Clone them beside each other:
+You need Python 3.12 or 3.13, uv and Node.js 22. Clone both repositories beside each other:
 
 ```sh
 git clone https://github.com/JiahaoZhang-Public/computedeck.git

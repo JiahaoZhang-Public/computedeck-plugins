@@ -24,7 +24,7 @@ jobs:
           repository: JiahaoZhang-Public/computedeck
           path: core-checkout
           ref: main
-          ssh-key: ${{ secrets.COMPUTEDECK_READ_KEY }}
+          ssh-key: ${{ github.event.repository.private && secrets.COMPUTEDECK_READ_KEY || '' }}
           persist-credentials: false
       - run: mv core-checkout ../computedeck
       - name: Require a commit on main

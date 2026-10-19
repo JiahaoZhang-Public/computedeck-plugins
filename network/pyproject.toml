@@ -7,7 +7,7 @@ license-files = ["LICENSE", "NOTICE", "THIRD_PARTY_NOTICES"]
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "computedeck>=0.3.0a0,<0.4",
+    "computedeck>=0.3.0a0,<0.5",
     "pyyaml>=6,<7",
 ]
 

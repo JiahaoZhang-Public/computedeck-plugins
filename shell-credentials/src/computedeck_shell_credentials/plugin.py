@@ -66,7 +66,7 @@ def setup(ctx: PluginContext) -> None:
 
 
 plugin = Plugin(
-    requires=">=0.3,<0.5",
+    requires=">=0.3,<0.6",
     icon="key",
     id="shell-credentials",
     setup=setup,

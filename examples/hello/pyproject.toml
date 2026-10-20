@@ -3,7 +3,7 @@ name = "computedeck-hello"
 version = "0.1.0"
 description = "Hello: a ComputeDeck plugin"
 requires-python = ">=3.12"
-dependencies = ["computedeck>=0.3.0a0,<0.5"]
+dependencies = ["computedeck>=0.3.0a0,<0.6"]
 
 [project.entry-points."computedeck.plugins"]
 hello = "computedeck_hello:plugin"

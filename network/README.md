@@ -15,7 +15,7 @@ Permissions: read proxy configuration and OS networking state; start bounded dia
 commands; contact the named HTTPS site and explicitly configured IP SOCKS5 upstreams on request.
 Reading status does not contact external sites or change system proxies.
 
-Supports ComputeDeck 0.3 and 0.4 (`PLUGIN_API = 1`). Apache-2.0.
+Supports ComputeDeck 0.3, 0.4 and 0.5 (`PLUGIN_API = 1`). Apache-2.0.
 
 中文：代理诊断只读取服务器的代理配置与网络状态。出口测速只在点击后访问固定 HTTPS
 站点，不跟随重定向，不解析上游域名；可向配置中至多四个 IP SOCKS5 上游发送认证。

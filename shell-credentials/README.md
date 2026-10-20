@@ -7,7 +7,7 @@ The credentials file must be mode 600. Commands, variable expansion and shell op
 are rejected. Secret values are not displayed in the UI.
 
 Permissions: read environment variables and the named files; no network access.
-Supports ComputeDeck 0.3 and 0.4 (`PLUGIN_API = 1`). Apache-2.0.
+Supports ComputeDeck 0.3, 0.4 and 0.5 (`PLUGIN_API = 1`). Apache-2.0.
 
 中文：解析 `shell:变量名`，先读进程环境；对上述两个允许的键，再依次读取数据目录下的
 `credentials.env` 和 `~/.zshrc` 中的字面量赋值。凭据文件权限必须为 600。不会执行 shell

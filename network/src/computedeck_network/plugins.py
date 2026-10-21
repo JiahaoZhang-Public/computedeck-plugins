@@ -36,7 +36,7 @@ def setup_egress(ctx: PluginContext) -> None:
 WEB = Path(__file__).parent / "web"
 
 proxy = Plugin(
-    requires=">=0.3,<0.6",
+    requires=">=0.3,<0.7",
     icon="network",
     id="proxy",
     setup=setup_proxy,
@@ -57,7 +57,7 @@ proxy = Plugin(
 )
 
 egress = Plugin(
-    requires=">=0.3,<0.6",
+    requires=">=0.3,<0.7",
     icon="chart",
     id="egress",
     setup=setup_egress,

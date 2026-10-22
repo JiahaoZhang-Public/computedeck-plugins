@@ -128,7 +128,7 @@ wheels = [
 
 [[package]]
 name = "computedeck"
-version = "0.5.0"
+version = "0.6.0"
 source = { editable = "../computedeck" }
 dependencies = [
     { name = "fastapi" },

@@ -58,7 +58,7 @@ def catalog_entries(plugin: str, version: str, release: dict[str, Any]) -> list[
                     "sha256": hashes,
                 },
                 "package": package,
-                "requires": ">=0.3,<0.6",
+                "requires": ">=0.3,<0.7",
                 "license": "Apache-2.0",
                 "permissions": [{"en": permission_en, "zh-CN": permission_zh}],
             }

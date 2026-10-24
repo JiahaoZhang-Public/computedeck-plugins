@@ -36,6 +36,6 @@ plugin = Plugin(
     ),
     # Tools that start off are switched on by their owner in the Toolbox.
     default_enabled=False,
-    requires=">=0.3,<0.7",
+    requires=">=0.3,<0.8",
     web=Path(__file__).parent / "web",
 )

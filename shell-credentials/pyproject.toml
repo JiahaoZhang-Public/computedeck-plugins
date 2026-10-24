@@ -6,7 +6,7 @@ license = "Apache-2.0"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "computedeck>=0.3.0a0,<0.7",
+    "computedeck>=0.3.0a0,<0.8",
 ]
 
 [project.entry-points."computedeck.plugins"]
